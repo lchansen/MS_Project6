@@ -13,6 +13,14 @@
 		A374F89A1FB3FCB2009FDF41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A374F8991FB3FCB2009FDF41 /* Assets.xcassets */; };
 		A374F89D1FB3FCB2009FDF41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A374F89B1FB3FCB2009FDF41 /* LaunchScreen.storyboard */; };
 		A374F8A01FB3FCB2009FDF41 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F89F1FB3FCB2009FDF41 /* main.m */; };
+		A374F8B91FB3FD1C009FDF41 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8A91FB3FD1B009FDF41 /* CircularBuffer.m */; };
+		A374F8BA1FB3FD1C009FDF41 /* CubicSpline.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8AB1FB3FD1B009FDF41 /* CubicSpline.m */; };
+		A374F8BB1FB3FD1C009FDF41 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8AC1FB3FD1B009FDF41 /* FFTHelper.m */; };
+		A374F8BC1FB3FD1C009FDF41 /* Novocaine.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8AF1FB3FD1B009FDF41 /* Novocaine.m */; };
+		A374F8BD1FB3FD1C009FDF41 /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8B01FB3FD1B009FDF41 /* AudioFileReader.m */; };
+		A374F8BE1FB3FD1C009FDF41 /* DataBufferBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8B11FB3FD1B009FDF41 /* DataBufferBlock.m */; };
+		A374F8BF1FB3FD1C009FDF41 /* BufferedOverlapQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8B31FB3FD1B009FDF41 /* BufferedOverlapQueue.m */; };
+		A374F8C01FB3FD1C009FDF41 /* PeakFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8B51FB3FD1C009FDF41 /* PeakFinder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +34,22 @@
 		A374F89C1FB3FCB2009FDF41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A374F89E1FB3FCB2009FDF41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A374F89F1FB3FCB2009FDF41 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A374F8A81FB3FD1B009FDF41 /* DataBufferBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBufferBlock.h; sourceTree = "<group>"; };
+		A374F8A91FB3FD1B009FDF41 /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularBuffer.m; sourceTree = "<group>"; };
+		A374F8AA1FB3FD1B009FDF41 /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularBuffer.h; sourceTree = "<group>"; };
+		A374F8AB1FB3FD1B009FDF41 /* CubicSpline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubicSpline.m; sourceTree = "<group>"; };
+		A374F8AC1FB3FD1B009FDF41 /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFTHelper.m; sourceTree = "<group>"; };
+		A374F8AD1FB3FD1B009FDF41 /* CubicSpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubicSpline.h; sourceTree = "<group>"; };
+		A374F8AE1FB3FD1B009FDF41 /* Novocaine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Novocaine.h; sourceTree = "<group>"; };
+		A374F8AF1FB3FD1B009FDF41 /* Novocaine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Novocaine.m; sourceTree = "<group>"; };
+		A374F8B01FB3FD1B009FDF41 /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileReader.m; sourceTree = "<group>"; };
+		A374F8B11FB3FD1B009FDF41 /* DataBufferBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBufferBlock.m; sourceTree = "<group>"; };
+		A374F8B21FB3FD1B009FDF41 /* PeakFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeakFinder.h; sourceTree = "<group>"; };
+		A374F8B31FB3FD1B009FDF41 /* BufferedOverlapQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferedOverlapQueue.m; sourceTree = "<group>"; };
+		A374F8B41FB3FD1C009FDF41 /* BufferedOverlapQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferedOverlapQueue.h; sourceTree = "<group>"; };
+		A374F8B51FB3FD1C009FDF41 /* PeakFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeakFinder.m; sourceTree = "<group>"; };
+		A374F8B71FB3FD1C009FDF41 /* FFTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFTHelper.h; sourceTree = "<group>"; };
+		A374F8B81FB3FD1C009FDF41 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileReader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +66,7 @@
 		A374F8841FB3FCB2009FDF41 = {
 			isa = PBXGroup;
 			children = (
+				A374F8A61FB3FCF8009FDF41 /* AudioDSPUtils */,
 				A374F88F1FB3FCB2009FDF41 /* MS_Project6 */,
 				A374F88E1FB3FCB2009FDF41 /* Products */,
 			);
@@ -69,6 +94,29 @@
 				A374F89F1FB3FCB2009FDF41 /* main.m */,
 			);
 			path = MS_Project6;
+			sourceTree = "<group>";
+		};
+		A374F8A61FB3FCF8009FDF41 /* AudioDSPUtils */ = {
+			isa = PBXGroup;
+			children = (
+				A374F8B81FB3FD1C009FDF41 /* AudioFileReader.h */,
+				A374F8B01FB3FD1B009FDF41 /* AudioFileReader.m */,
+				A374F8B41FB3FD1C009FDF41 /* BufferedOverlapQueue.h */,
+				A374F8B31FB3FD1B009FDF41 /* BufferedOverlapQueue.m */,
+				A374F8AA1FB3FD1B009FDF41 /* CircularBuffer.h */,
+				A374F8A91FB3FD1B009FDF41 /* CircularBuffer.m */,
+				A374F8AD1FB3FD1B009FDF41 /* CubicSpline.h */,
+				A374F8AB1FB3FD1B009FDF41 /* CubicSpline.m */,
+				A374F8A81FB3FD1B009FDF41 /* DataBufferBlock.h */,
+				A374F8B11FB3FD1B009FDF41 /* DataBufferBlock.m */,
+				A374F8B71FB3FD1C009FDF41 /* FFTHelper.h */,
+				A374F8AC1FB3FD1B009FDF41 /* FFTHelper.m */,
+				A374F8AE1FB3FD1B009FDF41 /* Novocaine.h */,
+				A374F8AF1FB3FD1B009FDF41 /* Novocaine.m */,
+				A374F8B21FB3FD1B009FDF41 /* PeakFinder.h */,
+				A374F8B51FB3FD1C009FDF41 /* PeakFinder.m */,
+			);
+			path = AudioDSPUtils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,8 +190,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A374F8BF1FB3FD1C009FDF41 /* BufferedOverlapQueue.m in Sources */,
+				A374F8BE1FB3FD1C009FDF41 /* DataBufferBlock.m in Sources */,
 				A374F8951FB3FCB2009FDF41 /* ViewController.m in Sources */,
+				A374F8BD1FB3FD1C009FDF41 /* AudioFileReader.m in Sources */,
+				A374F8C01FB3FD1C009FDF41 /* PeakFinder.m in Sources */,
+				A374F8BA1FB3FD1C009FDF41 /* CubicSpline.m in Sources */,
+				A374F8BB1FB3FD1C009FDF41 /* FFTHelper.m in Sources */,
+				A374F8BC1FB3FD1C009FDF41 /* Novocaine.m in Sources */,
 				A374F8A01FB3FCB2009FDF41 /* main.m in Sources */,
+				A374F8B91FB3FD1C009FDF41 /* CircularBuffer.m in Sources */,
 				A374F8921FB3FCB2009FDF41 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
