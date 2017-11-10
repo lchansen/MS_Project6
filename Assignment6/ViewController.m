@@ -13,7 +13,7 @@
 #import "math.h"
 #import "Assignment6-Swift.h"
 
-#define BUFFER_SIZE 8192
+#define BUFFER_SIZE 262144
 
 @interface ViewController ()
 @property (strong, nonatomic) HTTPHandler *httpHandler;
@@ -22,9 +22,18 @@
 @property (strong, nonatomic) FFTHelper *fftHelper;
 @property (strong, nonatomic) NSTimer *repeatTimer;
 @property (weak, nonatomic) IBOutlet UILabel *testLabel;
+@property (nonatomic) float *arrayData;
+@property (nonatomic) NSInteger secondCount;
 @end
 
 @implementation ViewController
+
+-(HTTPHandler*)httpHandler{
+    if(!_httpHandler) {
+        _httpHandler = [[HTTPHandler alloc] init];
+    }
+    return _httpHandler;
+}
 
 -(Novocaine*)audioManager{
     if(!_audioManager){
@@ -55,16 +64,17 @@
     return _repeatTimer;
 }
 
-- (IBAction)recordPress:(id)sender {
-    self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-                                                        target:self
-                                                      selector:@selector(update)
-                                                      userInfo:nil
-                                                       repeats:YES];
+-(NSInteger)secondCount{
+    if(!_secondCount) {
+        _secondCount = 0;
+    }
+    return _secondCount;
 }
-- (IBAction)recordRelease:(id)sender {
-    self.repeatTimer.invalidate;
+
+- (IBAction)recordStart:(id)sender {
+    [self sendAudio];
 }
+
 
 
 
@@ -86,6 +96,34 @@
     //                                    repeats:YES];
 }
 
+- (void) timerLabel {
+    if(self.secondCount == -1) {
+        self.repeatTimer.invalidate;
+        NSMutableArray *myArray = [[NSMutableArray alloc] init];
+        for (int i = 0; i < BUFFER_SIZE; i++) {
+            NSNumber *number = [NSNumber numberWithFloat:self.arrayData[i]];
+            [myArray addObject:number];
+        }
+        [self.httpHandler loginWithUser:@"user" pass:@"pass"];
+        [self.httpHandler initializeTrainWithSampleRate:BUFFER_SIZE signal:myArray label:@"Oscar"];
+        [self.httpHandler sendTrainPostWithJsonInBody];
+        return;
+    }
+    self.testLabel.text = [NSString stringWithFormat: @"%li", (long)self.secondCount];
+    self.secondCount--;
+}
+
+- (void)sendAudio {
+    self.arrayData = malloc(sizeof(float)*BUFFER_SIZE);
+    [self.buffer fetchFreshData:self.arrayData withNumSamples:BUFFER_SIZE];
+    self.secondCount = 4;
+    self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                        target:self
+                                                      selector:@selector(timerLabel)
+                                                      userInfo:nil
+                                                       repeats:YES];
+    
+}
 
 //redo all of this
 - (void) update {

@@ -23,37 +23,30 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="RECORD"/>
                                 <connections>
-                                    <action selector="recordPress:" destination="BYZ-38-t0r" eventType="touchDown" id="zln-Ed-dqz"/>
-                                    <action selector="recordPressed:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="Gb6-rA-q9M"/>
-                                    <action selector="recordRelease:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xMJ-jq-CeP"/>
+                                    <action selector="recordStart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r10-Us-vHf"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold the Button and Speak into the microphone" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kc4-aC-neP">
-                                <rect key="frame" x="44" y="193" width="287" height="41"/>
+                                <rect key="frame" x="6" y="436" width="364" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SE7-go-aWn">
-                                <rect key="frame" x="144" y="449" width="87" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="3GZ-04-bjV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SE7-go-aWn">
+                                <rect key="frame" x="121" y="100" width="132" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" red="1" green="0.11611636262118485" blue="0.033943473969138549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="SE7-go-aWn" firstAttribute="leading" secondItem="A8c-Ug-p02" secondAttribute="leading" id="BrJ-ON-FJQ"/>
-                            <constraint firstItem="Kc4-aC-neP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="173" id="Fkg-kM-RD2"/>
-                            <constraint firstItem="SE7-go-aWn" firstAttribute="top" secondItem="A8c-Ug-p02" secondAttribute="bottom" constant="86" id="GCF-4r-z7T"/>
-                            <constraint firstItem="A8c-Ug-p02" firstAttribute="top" secondItem="Kc4-aC-neP" secondAttribute="bottom" constant="90" id="Osp-A1-4Wu"/>
-                            <constraint firstItem="SE7-go-aWn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QBw-Fy-or7"/>
-                            <constraint firstItem="Kc4-aC-neP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="44" id="gq3-HW-vu6"/>
-                            <constraint firstItem="Kc4-aC-neP" firstAttribute="centerX" secondItem="A8c-Ug-p02" secondAttribute="centerX" id="tZE-qg-zRB"/>
-                            <constraint firstItem="SE7-go-aWn" firstAttribute="trailing" secondItem="A8c-Ug-p02" secondAttribute="trailing" id="yvs-qz-MCm"/>
+                            <constraint firstItem="SE7-go-aWn" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="3AT-W3-cUy"/>
+                            <constraint firstItem="Kc4-aC-neP" firstAttribute="top" secondItem="A8c-Ug-p02" secondAttribute="bottom" constant="73" id="4dx-0W-zEX"/>
+                            <constraint firstItem="A8c-Ug-p02" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Q0d-Vb-skj"/>
+                            <constraint firstItem="A8c-Ug-p02" firstAttribute="top" secondItem="SE7-go-aWn" secondAttribute="bottom" constant="184" id="eKB-iD-736"/>
+                            <constraint firstItem="A8c-Ug-p02" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ecd-8g-7CZ"/>
+                            <constraint firstItem="Kc4-aC-neP" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nkZ-jC-SXY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

@@ -8,22 +8,23 @@
 
 import Foundation
 
-let SERVER_URL = "http://192.168.0.177:8000"
+let SERVER_URL = "http://162.243.151.247"
 
 import Foundation
 import UIKit
 
 @objc public class HTTPHandler: NSObject, URLSessionDelegate {
     
-    var session = URLSession()
-    var sampleRate = 0
-    var signal = [Float]()
-    var label = String()
+    lazy var session = URLSession()
+    lazy var sampleRate = 44100
+    lazy var signal = [Float]()
+    lazy var label = String()
     let operationQueue = OperationQueue()
     
     let animation = CATransition()
     
-    override init(){
+    /*override init(){
+        super.init()
         let sessionConfig = URLSessionConfiguration.ephemeral
         
         sessionConfig.timeoutIntervalForRequest = 5.0
@@ -32,10 +33,45 @@ import UIKit
         
         self.sampleRate = 44100
         self.label = "init"
+    }*/
+    
+    func login(user: String, pass: String){
+        let baseURL = "\(SERVER_URL)/Login"
+        let postUrl = URL(string: "\(baseURL)")
+        
+        // create a custom HTTP POST request
+        var request = URLRequest(url: postUrl!)
+        
+        // data to send in body of post request (send arguments as json)
+        let jsonUpload:NSDictionary = ["username": user, "password": pass]
+        
+        
+        let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
+        
+        request.httpMethod = "POST"
+        request.httpBody = requestBody
+        
+        let postTask : URLSessionDataTask = self.session.dataTask(with: request,
+                                                                  completionHandler:{(data, response, error) in
+                                                                    print("Response:\n%@",response!)
+                                                                    let jsonDictionary = self.convertDataToDictionary(with: data)
+                                                                    let status:String? = jsonDictionary.value(forKey: "status") as? String
+                                                                    DispatchQueue.main.async{
+                                                                        
+                                                                        if(status == "success"){
+                                                                            print("we gucci")
+                                                                        }
+                                                                        else{
+                                                                            print(error as Any)
+                                                                        }
+                                                                    }
+        })
+        print("You logged in?!?!?!")
+        postTask.resume() // start the task
     }
     
     func initializeTrain(sampleRate: Int, signal: [Float], label: String){
-        let sessionConfig = URLSessionConfiguration.ephemeral
+        let sessionConfig = URLSessionConfiguration.default
         
         sessionConfig.timeoutIntervalForRequest = 5.0
         sessionConfig.timeoutIntervalForResource = 8.0
@@ -54,11 +90,11 @@ import UIKit
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = kCATransitionReveal
         animation.duration = 0.5
-        
+        print("You did it")
     }
     
     func initializeTest(sampleRate: Int, signal: [Float]){
-        let sessionConfig = URLSessionConfiguration.ephemeral
+        let sessionConfig = URLSessionConfiguration.default
         
         sessionConfig.timeoutIntervalForRequest = 5.0
         sessionConfig.timeoutIntervalForResource = 8.0
@@ -79,9 +115,9 @@ import UIKit
     }
     
     
-    func sendTrainPostWithJsonInBody(_ sender: AnyObject) {
+    func sendTrainPostWithJsonInBody() {
         
-        let baseURL = "\(SERVER_URL)/PostWithJson"
+        let baseURL = "\(SERVER_URL)/AddDataPoint"
         let postUrl = URL(string: "\(baseURL)")
         
         // create a custom HTTP POST request
@@ -116,7 +152,7 @@ import UIKit
         
     }
     
-    func sendTestPostWithJsonInBody(_ sender: AnyObject) {
+    func sendTestPostWithJsonInBody() {
         
         let baseURL = "\(SERVER_URL)/PostWithJson"
         let postUrl = URL(string: "\(baseURL)")
