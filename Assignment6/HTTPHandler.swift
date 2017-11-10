@@ -16,7 +16,7 @@ import Foundation
 import UIKit
 
 @objc public class HTTPHandler: NSObject, URLSessionDelegate {
-    
+    static let sharedInstance = HTTPHandler()
     lazy var session = URLSession()
     lazy var sampleRate = 44100
     lazy var signal = [Float]()

@@ -22,7 +22,9 @@
 @property (strong, nonatomic) FFTHelper *fftHelper;
 @property (strong, nonatomic) NSTimer *repeatTimer;
 @property (weak, nonatomic) IBOutlet UILabel *testLabel;
+@property (weak, nonatomic) IBOutlet UITextField *classLabel;
 @property (nonatomic) float *arrayData;
+@property (weak, nonatomic) IBOutlet UILabel *dsid;
 @property (nonatomic) NSInteger secondCount;
 @end
 
@@ -30,7 +32,7 @@
 
 -(HTTPHandler*)httpHandler{
     if(!_httpHandler) {
-        _httpHandler = [[HTTPHandler alloc] init];
+        _httpHandler = HTTPHandler.sharedInstance;
     }
     return _httpHandler;
 }
@@ -104,7 +106,7 @@
             NSNumber *number = [NSNumber numberWithFloat:self.arrayData[i]];
             [myArray addObject:number];
         }
-        [self.httpHandler initializeTrainWithSampleRate:@44100 signal:myArray label:@"Luke"];
+        [self.httpHandler initializeTrainWithSampleRate:@44100 signal:myArray label:self.classLabel.text];
         [self.httpHandler loginWithUser:@"user" pass:@"pass"];
         [self.httpHandler sendTrainPostWithJsonInBody];
         return;
