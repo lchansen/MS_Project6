@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55F1C6B81FB56E910086BA41 /* HTTPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F1C6B71FB56E910086BA41 /* HTTPController.swift */; };
 		A374F8921FB3FCB2009FDF41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8911FB3FCB2009FDF41 /* AppDelegate.m */; };
 		A374F8951FB3FCB2009FDF41 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A374F8941FB3FCB2009FDF41 /* ViewController.m */; };
 		A374F8981FB3FCB2009FDF41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A374F8961FB3FCB2009FDF41 /* Main.storyboard */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		55F1C6B71FB56E910086BA41 /* HTTPController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPController.swift; path = ../HTTPController.swift; sourceTree = "<group>"; };
+		55F1C6BA1FB572500086BA41 /* MS_Project6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MS_Project6-Bridging-Header.h"; sourceTree = "<group>"; };
 		A374F88D1FB3FCB2009FDF41 /* MS_Project6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MS_Project6.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A374F8901FB3FCB2009FDF41 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A374F8911FB3FCB2009FDF41 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -92,6 +95,8 @@
 				A374F89B1FB3FCB2009FDF41 /* LaunchScreen.storyboard */,
 				A374F89E1FB3FCB2009FDF41 /* Info.plist */,
 				A374F89F1FB3FCB2009FDF41 /* main.m */,
+				55F1C6B71FB56E910086BA41 /* HTTPController.swift */,
+				55F1C6BA1FB572500086BA41 /* MS_Project6-Bridging-Header.h */,
 			);
 			path = MS_Project6;
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 				TargetAttributes = {
 					A374F88C1FB3FCB2009FDF41 = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -193,6 +199,7 @@
 				A374F8BF1FB3FD1C009FDF41 /* BufferedOverlapQueue.m in Sources */,
 				A374F8BE1FB3FD1C009FDF41 /* DataBufferBlock.m in Sources */,
 				A374F8951FB3FCB2009FDF41 /* ViewController.m in Sources */,
+				55F1C6B81FB56E910086BA41 /* HTTPController.swift in Sources */,
 				A374F8BD1FB3FD1C009FDF41 /* AudioFileReader.m in Sources */,
 				A374F8C01FB3FD1C009FDF41 /* PeakFinder.m in Sources */,
 				A374F8BA1FB3FD1C009FDF41 /* CubicSpline.m in Sources */,
@@ -334,12 +341,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F69WJ27LN4;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = N2FF4799SW;
 				INFOPLIST_FILE = MS_Project6/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.smu.lyle.cse5323.lhansen.MS-Project6";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MS_Project6/MS_Project6-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -348,12 +360,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F69WJ27LN4;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = N2FF4799SW;
 				INFOPLIST_FILE = MS_Project6/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.smu.lyle.cse5323.lhansen.MS-Project6";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MS_Project6/MS_Project6-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

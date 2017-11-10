@@ -11,6 +11,7 @@
 #import "CircularBuffer.h"
 #import "FFTHelper.h"
 #import "math.h"
+#import "MS_Project6-Swift.h"
 
 #define BUFFER_SIZE 8192
 
@@ -18,6 +19,8 @@
 @property (strong, nonatomic) Novocaine *audioManager;
 @property (strong, nonatomic) CircularBuffer *buffer;
 @property (strong, nonatomic) FFTHelper *fftHelper;
+@property (strong, nonatomic) NSTimer *repeatTimer;
+@property (weak, nonatomic) IBOutlet UILabel *testLabel;
 @end
 
 @implementation ViewController
@@ -44,6 +47,23 @@
     return _fftHelper;
 }
 
+-(NSTimer*)repeatTimer{
+    if(!_repeatTimer) {
+        _repeatTimer = [[NSTimer alloc]init];
+    }
+    return _repeatTimer;
+}
+
+- (IBAction)recordPress:(id)sender {
+    self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                          target:self
+                                        selector:@selector(update)
+                                        userInfo:nil
+                                         repeats:YES];
+}
+- (IBAction)recordRelease:(id)sender {
+    self.repeatTimer.invalidate;
+}
 
 
 
@@ -80,10 +100,10 @@
     //[self fftAverage: fftMagnitude: fftMag];
     
     float maxVal = 0;
-    vDSP_Length maxIndex = 10000000;
+    vDSP_Length maxIndex = 0;
 
     for(int i = 1; i < BUFFER_SIZE/8; i++) {
-        if(fftMagnitude[i] > maxVal && 20*log(fftMagnitude[i]) > 20) {
+        if(fftMagnitude[i] > maxVal) {
             maxVal = fftMagnitude[i];
             maxIndex = i;
         }
@@ -95,12 +115,13 @@
             i += 60;
             continue;
         }
-        if(fftMagnitude[i] > maxVal2 && 20*log(fftMagnitude[i]) > 20) {
+        if(fftMagnitude[i] > maxVal2) {
             maxVal2 = fftMagnitude[i];
             maxIndex2 = i;
         }
     }
-//    float freq1 = (float)maxIndex * self.audioManager.samplingRate/(BUFFER_SIZE);
+    float freq1 = (float)maxIndex * self.audioManager.samplingRate/(BUFFER_SIZE);
+    self.testLabel.text = [NSString stringWithFormat:@"%.1f Hz", (freq1)];
 //    float freq2 = (float)maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE);
     
     
