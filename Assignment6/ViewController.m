@@ -104,8 +104,8 @@
             NSNumber *number = [NSNumber numberWithFloat:self.arrayData[i]];
             [myArray addObject:number];
         }
+        [self.httpHandler initializeTrainWithSampleRate:@44100 signal:myArray label:@"Luke"];
         [self.httpHandler loginWithUser:@"user" pass:@"pass"];
-        [self.httpHandler initializeTrainWithSampleRate:BUFFER_SIZE signal:myArray label:@"Oscar"];
         [self.httpHandler sendTrainPostWithJsonInBody];
         return;
     }

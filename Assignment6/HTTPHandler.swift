@@ -8,7 +8,9 @@
 
 import Foundation
 
-let SERVER_URL = "http://162.243.151.247"
+//let SERVER_URL = "http://162.243.151.247"
+let SERVER_URL = "http://192.168.0.177:8000"
+
 
 import Foundation
 import UIKit
@@ -76,7 +78,7 @@ import UIKit
         sessionConfig.timeoutIntervalForRequest = 5.0
         sessionConfig.timeoutIntervalForResource = 8.0
         sessionConfig.httpMaximumConnectionsPerHost = 1
-        
+        print("Signal size is:", signal.count)
         self.sampleRate = sampleRate
         self.signal = signal
         self.label = label
@@ -124,8 +126,8 @@ import UIKit
         var request = URLRequest(url: postUrl!)
         
         // data to send in body of post request (send arguments as json)
-        let jsonUpload:NSDictionary = ["sample_rate": self.sampleRate, "signal": self.signal, "label": self.label]
-        
+        let jsonUpload:NSDictionary = ["sample_rate": 44100, "signal": self.signal, "label": self.label, "dsid":1]
+        //print("json:", jsonUpload)
         
         let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
         
@@ -134,18 +136,19 @@ import UIKit
         
         let postTask : URLSessionDataTask = self.session.dataTask(with: request,
                                                                   completionHandler:{(data, response, error) in
-                                                                    print("Response:\n%@",response!)
+                                                                    print("Data:\n%@",data as Any)
+                                                                    print("Response:\n%@",response as Any)
+                                                                    print("Error:\n%@",error as Any)
                                                                     let jsonDictionary = self.convertDataToDictionary(with: data)
                                                                     let status:String? = jsonDictionary.value(forKey: "status") as? String
-                                                                    DispatchQueue.main.async{
-                                                                        
-                                                                        if(status == "success"){
-                                                                            print("we gucci")
-                                                                        }
-                                                                        else{
-                                                                            print(error as Any)
-                                                                        }
+                                                                    if(status == "success"){
+                                                                        print("we gucci")
                                                                     }
+                                                                    else{
+                                                                        print("You done got an error")
+                                                                        print(error as Any)
+                                                                    }
+                                                                    
         })
         
         postTask.resume() // start the task
@@ -154,7 +157,7 @@ import UIKit
     
     func sendTestPostWithJsonInBody() {
         
-        let baseURL = "\(SERVER_URL)/PostWithJson"
+        let baseURL = "\(SERVER_URL)/AddDataPoint"
         let postUrl = URL(string: "\(baseURL)")
         
         // create a custom HTTP POST request
