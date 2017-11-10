@@ -6,7 +6,7 @@
 //  Copyright © 2017 SMU.cse5323. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "TrainingViewController.h"
 #import "Novocaine.h"
 #import "CircularBuffer.h"
 #import "FFTHelper.h"
@@ -15,7 +15,7 @@
 
 #define BUFFER_SIZE 262144
 
-@interface ViewController ()
+@interface TrainingViewController ()
 @property (strong, nonatomic) HTTPHandler *httpHandler;
 @property (strong, nonatomic) Novocaine *audioManager;
 @property (strong, nonatomic) CircularBuffer *buffer;
@@ -28,7 +28,7 @@
 @property (nonatomic) NSInteger secondCount;
 @end
 
-@implementation ViewController
+@implementation TrainingViewController
 
 -(HTTPHandler*)httpHandler{
     if(!_httpHandler) {
@@ -83,7 +83,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    __block ViewController * __weak  weakSelf = self;
+    __block TrainingViewController * __weak  weakSelf = self;
     [self.audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels){
         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
     }];
