@@ -22,6 +22,8 @@
 		55F1C71B1FB581250086BA41 /* PeakFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1C7131FB581250086BA41 /* PeakFinder.m */; };
 		55F1C71C1FB581250086BA41 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1C7141FB581250086BA41 /* CircularBuffer.m */; };
 		55F1C71D1FB581250086BA41 /* BufferedOverlapQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1C7151FB581250086BA41 /* BufferedOverlapQueue.m */; };
+		A3B1E10D1FB5E5780024AAB6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3B1E10C1FB5E5780024AAB6 /* ViewController.m */; };
+		A3B1E1101FB5F07C0024AAB6 /* TestingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3B1E10F1FB5F07C0024AAB6 /* TestingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,10 @@
 		55F1C7131FB581250086BA41 /* PeakFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeakFinder.m; sourceTree = "<group>"; };
 		55F1C7141FB581250086BA41 /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularBuffer.m; sourceTree = "<group>"; };
 		55F1C7151FB581250086BA41 /* BufferedOverlapQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferedOverlapQueue.m; sourceTree = "<group>"; };
+		A3B1E10B1FB5E5780024AAB6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A3B1E10C1FB5E5780024AAB6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A3B1E10E1FB5F07C0024AAB6 /* TestingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestingViewController.h; sourceTree = "<group>"; };
+		A3B1E10F1FB5F07C0024AAB6 /* TestingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +98,11 @@
 				55F1C6EB1FB5803D0086BA41 /* AppDelegate.m */,
 				55F1C6ED1FB5803D0086BA41 /* TrainingViewController.h */,
 				55F1C6EE1FB5803D0086BA41 /* TrainingViewController.m */,
+				A3B1E10E1FB5F07C0024AAB6 /* TestingViewController.h */,
+				A3B1E10F1FB5F07C0024AAB6 /* TestingViewController.m */,
 				55F1C7031FB580E20086BA41 /* Main.storyboard */,
+				A3B1E10B1FB5E5780024AAB6 /* ViewController.h */,
+				A3B1E10C1FB5E5780024AAB6 /* ViewController.m */,
 				55F1C6F31FB5803D0086BA41 /* Assets.xcassets */,
 				55F1C6F51FB5803D0086BA41 /* LaunchScreen.storyboard */,
 				55F1C6F81FB5803D0086BA41 /* Info.plist */,
@@ -201,7 +211,9 @@
 				55F1C6FA1FB5803D0086BA41 /* main.m in Sources */,
 				55F1C7021FB5809A0086BA41 /* HTTPHandler.swift in Sources */,
 				55F1C7181FB581250086BA41 /* Novocaine.m in Sources */,
+				A3B1E1101FB5F07C0024AAB6 /* TestingViewController.m in Sources */,
 				55F1C7171FB581250086BA41 /* DataBufferBlock.m in Sources */,
+				A3B1E10D1FB5E5780024AAB6 /* ViewController.m in Sources */,
 				55F1C71B1FB581250086BA41 /* PeakFinder.m in Sources */,
 				55F1C7161FB581250086BA41 /* FFTHelper.m in Sources */,
 				55F1C6EC1FB5803D0086BA41 /* AppDelegate.m in Sources */,

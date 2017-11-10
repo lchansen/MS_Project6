@@ -6,7 +6,7 @@
 //  Copyright © 2017 SMU.cse5323. All rights reserved.
 //
 
-#import "TrainingViewController.h"
+#import "TestingViewController.h"
 #import "Novocaine.h"
 #import "CircularBuffer.h"
 #import "FFTHelper.h"
@@ -15,26 +15,32 @@
 
 #define BUFFER_SIZE 262144
 
-@interface TrainingViewController ()<UITextFieldDelegate>
+@interface TestingViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) HTTPHandler *httpHandler;
 @property (strong, nonatomic) Novocaine *audioManager;
 @property (strong, nonatomic) CircularBuffer *buffer;
 @property (strong, nonatomic) FFTHelper *fftHelper;
 @property (strong, nonatomic) NSTimer *repeatTimer;
-@property (weak, nonatomic) IBOutlet UILabel *testLabel; //this is the timer that displays to the right of the RECORD button
-@property (weak, nonatomic) IBOutlet UITextField *classLabel;
+@property (nonatomic) NSInteger secondCount;
 @property (nonatomic) float *arrayData;
+@property (weak, nonatomic) IBOutlet UILabel *timerLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *dsid;
 @property (weak, nonatomic) IBOutlet UIStepper *dsidStepper;
-@property (nonatomic) NSInteger secondCount;
-@property (weak, nonatomic) IBOutlet UITextField *k_neighbors;
-@property (weak, nonatomic) IBOutlet UITextField *svm_kernel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
+@property (weak, nonatomic) IBOutlet UILabel *classLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
+
+
+//@property (weak, nonatomic) IBOutlet UILabel *testLabel; //this is the timer that displays to the right of the RECORD button
+//@property (weak, nonatomic) IBOutlet UITextField *classLabel;
+//@property (weak, nonatomic) IBOutlet UITextField *k_neighbors;
+//@property (weak, nonatomic) IBOutlet UITextField *svm_kernel;
 
 @end
 
-@implementation TrainingViewController
+@implementation TestingViewController
 
 -(HTTPHandler*)httpHandler{
     if(!_httpHandler) {
@@ -79,10 +85,6 @@
     return _secondCount;
 }
 
-- (IBAction)recordStart:(id)sender {
-    [self sendAudio];
-}
-
 -(bool)textFieldShouldReturn:(UITextField*) textField {
     [textField resignFirstResponder];
     return YES;
@@ -90,21 +92,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.classLabel.delegate = self;
-    self.k_neighbors.delegate = self;
-    self.svm_kernel.delegate = self;
-    [self initDSID:0];
+    [self initDSID:1];
     self.spinner.hidesWhenStopped = YES;
-    [self.httpHandler getDSIDWithVc:self];
-    __block TrainingViewController * __weak  weakSelf = self;
+    __block TestingViewController * __weak  weakSelf = self;
     [self.audioManager setInputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels){
         [weakSelf.buffer addNewFloatData:data withNumSamples:numFrames];
     }];
-    
     [self.audioManager play];
 }
 
-- (void) timerLabel {
+- (void) updateTimerLabel {
     if(self.secondCount == -1) {
         [self.repeatTimer invalidate];
         NSMutableArray *myArray = [[NSMutableArray alloc] init];
@@ -112,11 +109,16 @@
             NSNumber *number = [NSNumber numberWithFloat:self.arrayData[i]];
             [myArray addObject:number];
         }
-        [self.spinner startAnimating];
-        [self.httpHandler trainWithDsid:(int)self.dsidStepper.value sampleRate:44100 signal:myArray label:self.classLabel.text vc:self];
+        NSString* clf = (self.segControl.selectedSegmentIndex==0) ? @"knn" : @"svm";
+        [self.httpHandler testWithDsid:(int)self.dsidStepper.value
+                              clf_name:clf
+                            sampleRate:44100
+                                signal:myArray
+                                    vc:self
+         ];
         return;
     }
-    self.testLabel.text = [NSString stringWithFormat: @"%li", (long)self.secondCount];
+    self.timerLabel.text = [NSString stringWithFormat: @"%li", (long)self.secondCount];
     self.secondCount--;
 }
 
@@ -126,13 +128,13 @@
     self.secondCount = 4;
     self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:1
                                                         target:self
-                                                      selector:@selector(timerLabel)
+                                                      selector:@selector(updateTimerLabel)
                                                       userInfo:nil
-                                                       repeats:YES];
-    
+                                                       repeats:YES
+                        ];
 }
 
-//only called by viewdidload, and the callback from
+//only called by viewdidload in this case
 - (void)initDSID:(NSInteger) d{
     self.dsid.text = [NSString stringWithFormat:@"%ld",(long)d];
     self.dsidStepper.value = (double)d;
@@ -142,30 +144,21 @@
     self.dsid.text = [NSString stringWithFormat:@"%ld",(long)sender.value];
 }
 
-- (IBAction)updateModel:(UIButton *)sender {
-    //k_neighbors defaults to 1
-    int n = [self.k_neighbors.text intValue];
-    n = (n!=0) ? n : 1;
-    
-    //svm_kernel defaults to the "rbf"
-    NSString* kernel = self.svm_kernel.text;
-    kernel = [@[@"linear", @"polynomial", @"rbf", @"sigmoid"] containsObject: kernel] ? kernel : @"rbf";
+- (IBAction)buttonPressed:(UIButton *)sender {
+    self.classLabel.text = @"";
     [self.spinner startAnimating];
-    [self.httpHandler updateModelWithDsid:(int)self.dsidStepper.value
-                              n_neighbors:n
-                               svm_kernel:kernel
-                                       vc:self
-     ];
+    [self sendAudio];
 }
 
--(void)callbackLabel:(NSString*)label{
-    self.statusLabel.text = label;
+-(void)setCLFLabel:(NSString*) label{
     [self.spinner stopAnimating];
+    self.classLabel.text = label;
 }
 
 -(void) viewDidDisappear:(BOOL)animated {
 }
 
 @end
+
 
 

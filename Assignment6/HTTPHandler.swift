@@ -22,181 +22,137 @@ import UIKit
     lazy var signal = [Float]()
     lazy var label = String()
     let operationQueue = OperationQueue()
-    
-    let animation = CATransition()
-    
-    /*override init(){
+
+    override init(){
         super.init()
-        let sessionConfig = URLSessionConfiguration.ephemeral
-        
+        let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = 5.0
         sessionConfig.timeoutIntervalForResource = 8.0
         sessionConfig.httpMaximumConnectionsPerHost = 1
         
-        self.sampleRate = 44100
-        self.label = "init"
-    }*/
+        self.session = URLSession(configuration: sessionConfig,
+                                  delegate: self,
+                                  delegateQueue:self.operationQueue)
+    }
     
-    func login(user: String, pass: String){
-        let baseURL = "\(SERVER_URL)/Login"
-        let postUrl = URL(string: "\(baseURL)")
-        
-        // create a custom HTTP POST request
-        var request = URLRequest(url: postUrl!)
-        
-        // data to send in body of post request (send arguments as json)
+    func login(user: String, pass: String, vc: ViewController){
+        var request = URLRequest(url: URL(string: "\(SERVER_URL)/Login")!)
         let jsonUpload:NSDictionary = ["username": user, "password": pass]
-        
-        
         let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
-        
         request.httpMethod = "POST"
         request.httpBody = requestBody
-        
         let postTask : URLSessionDataTask = self.session.dataTask(with: request,
+                                                                  completionHandler:{(data, response, error) in
+                                                                    DispatchQueue.main.async{
+                                                                        let httpRes:HTTPURLResponse = response as! HTTPURLResponse
+                                                                        if(httpRes.statusCode==200){
+                                                                            vc.loginSucess()
+                                                                        }
+                                                                        else{
+                                                                            vc.loginFail()
+                                                                        }
+                                                                    }
+        })
+        postTask.resume()
+    }
+    
+    func getDSID(vc: TrainingViewController){
+        var request = URLRequest(url: URL(string: "\(SERVER_URL)/GetNewDatasetId")!)
+        request.httpMethod = "GET"
+        let getTask : URLSessionDataTask = self.session.dataTask(with: request,
                                                                   completionHandler:{(data, response, error) in
                                                                     print("Response:\n%@",response!)
                                                                     let jsonDictionary = self.convertDataToDictionary(with: data)
+                                                                    DispatchQueue.main.async{
+                                                                        let httpRes:HTTPURLResponse = response as! HTTPURLResponse
+                                                                        if(httpRes.statusCode==200){
+                                                                            vc.initDSID(jsonDictionary["dsid"] as! Int)
+                                                                        }
+                                                                    }
+        })
+        getTask.resume()
+    }
+    
+    func train(dsid: Int, sampleRate: Int, signal: [Float], label: String, vc:TrainingViewController){
+        var request = URLRequest(url: URL(string: "\(SERVER_URL)/AddDataPoint")!)
+        let jsonUpload:NSDictionary = ["sample_rate": sampleRate, "signal": signal, "label": label, "dsid":dsid]
+        let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
+        request.httpMethod = "POST"
+        request.httpBody = requestBody
+        let postTask : URLSessionDataTask = self.session.dataTask(with: request,
+                                                                  completionHandler:{(data, response, error) in
+                                                                    let jsonDictionary = self.convertDataToDictionary(with: data)
+                                                                    print(jsonDictionary)
                                                                     let status:String? = jsonDictionary.value(forKey: "status") as? String
                                                                     DispatchQueue.main.async{
-                                                                        
                                                                         if(status == "success"){
-                                                                            print("we gucci")
-                                                                        }
-                                                                        else{
+                                                                            vc.callbackLabel("✅")
+                                                                        } else {
+                                                                            vc.callbackLabel("❌")
+                                                                            print("You done got an error")
                                                                             print(error as Any)
                                                                         }
                                                                     }
+                                                                    
         })
-        print("You logged in?!?!?!")
-        postTask.resume() // start the task
+        postTask.resume()
     }
     
-    func initializeTrain(sampleRate: Int, signal: [Float], label: String){
-        let sessionConfig = URLSessionConfiguration.default
-        
-        sessionConfig.timeoutIntervalForRequest = 5.0
-        sessionConfig.timeoutIntervalForResource = 8.0
-        sessionConfig.httpMaximumConnectionsPerHost = 1
-        print("Signal size is:", signal.count)
-        self.sampleRate = sampleRate
-        self.signal = signal
-        self.label = label
-        
-        
-        self.session = URLSession(configuration: sessionConfig,
-                                  delegate: self,
-                                  delegateQueue:self.operationQueue)
-        
-        // create reusable animation
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.type = kCATransitionReveal
-        animation.duration = 0.5
-        print("You did it")
-    }
-    
-    func initializeTest(sampleRate: Int, signal: [Float]){
-        let sessionConfig = URLSessionConfiguration.default
-        
-        sessionConfig.timeoutIntervalForRequest = 5.0
-        sessionConfig.timeoutIntervalForResource = 8.0
-        sessionConfig.httpMaximumConnectionsPerHost = 1
-        
-        self.sampleRate = sampleRate
-        self.signal = signal
-        
-        self.session = URLSession(configuration: sessionConfig,
-                                  delegate: self,
-                                  delegateQueue:self.operationQueue)
-        
-        // create reusable animation
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.type = kCATransitionReveal
-        animation.duration = 0.5
-        
-    }
-    
-    
-    func sendTrainPostWithJsonInBody() {
-        
-        let baseURL = "\(SERVER_URL)/AddDataPoint"
-        let postUrl = URL(string: "\(baseURL)")
-        
-        // create a custom HTTP POST request
-        var request = URLRequest(url: postUrl!)
-        
-        // data to send in body of post request (send arguments as json)
-        let jsonUpload:NSDictionary = ["sample_rate": 44100, "signal": self.signal, "label": self.label, "dsid":1]
-        //print("json:", jsonUpload)
-        
+    func updateModel(dsid: Int, n_neighbors: Int, svm_kernel: String, vc:TrainingViewController){
+        var request = URLRequest(url: URL(string: "\(SERVER_URL)/UpdateModel")!)
+        let jsonUpload:NSDictionary = ["dsid": dsid, "knn": ["n_neighbors":n_neighbors], "svm": ["kernel":svm_kernel]]
         let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
-        
         request.httpMethod = "POST"
         request.httpBody = requestBody
-        
         let postTask : URLSessionDataTask = self.session.dataTask(with: request,
                                                                   completionHandler:{(data, response, error) in
-                                                                    print("Data:\n%@",data as Any)
-                                                                    print("Response:\n%@",response as Any)
-                                                                    print("Error:\n%@",error as Any)
                                                                     let jsonDictionary = self.convertDataToDictionary(with: data)
+                                                                    print(jsonDictionary)
                                                                     let status:String? = jsonDictionary.value(forKey: "status") as? String
-                                                                    if(status == "success"){
-                                                                        print("we gucci")
-                                                                    }
-                                                                    else{
-                                                                        print("You done got an error")
-                                                                        print(error as Any)
+                                                                    DispatchQueue.main.async{
+                                                                        if(status == "success"){
+                                                                            vc.callbackLabel("✅")
+                                                                        } else if (status!.range(of: ">") != nil) {
+                                                                            vc.callbackLabel(status)
+                                                                        } else {
+                                                                            vc.callbackLabel("❌")
+                                                                            print("You done got an error")
+                                                                            print(error as Any)
+                                                                        }
                                                                     }
                                                                     
         })
-        
         postTask.resume() // start the task
-        
     }
     
-    func sendTestPostWithJsonInBody() {
-        
-        let baseURL = "\(SERVER_URL)/AddDataPoint"
-        let postUrl = URL(string: "\(baseURL)")
-        
-        // create a custom HTTP POST request
-        var request = URLRequest(url: postUrl!)
-        
-        // data to send in body of post request (send arguments as json)
-        let jsonUpload:NSDictionary = ["sample_rate": self.sampleRate, "signal": self.signal]
-        
-        
+    func test(dsid: Int, clf_name:String, sampleRate: Int, signal: [Float], vc: TestingViewController){
+        var request = URLRequest(url: URL(string: "\(SERVER_URL)/PredictOne")!)
+        let jsonUpload:NSDictionary = ["dsid": dsid, "clf_name":clf_name, "sample_rate": sampleRate, "signal": signal]
         let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
-        
         request.httpMethod = "POST"
         request.httpBody = requestBody
-        
         let postTask : URLSessionDataTask = self.session.dataTask(with: request,
                                                                   completionHandler:{(data, response, error) in
-                                                                    print("Response:\n%@",response!)
                                                                     let jsonDictionary = self.convertDataToDictionary(with: data)
+                                                                    print(jsonDictionary)
                                                                     let status:String? = jsonDictionary.value(forKey: "status") as? String
                                                                     let predLabel:String? = jsonDictionary.value(forKey: "predLabel") as? String
                                                                     DispatchQueue.main.async{
-                                                                        
                                                                         if(status == "success"){
-                                                                            print("predLabel: \(predLabel)")
+                                                                            print("predLabel: \(String(describing: predLabel))")
+                                                                            vc.setCLFLabel(predLabel!)
                                                                         }
                                                                         else{
-                                                                            print(error as Any)
+                                                                            vc.setCLFLabel(status)
                                                                         }
                                                                     }
-                                                                    
         })
-        
-        postTask.resume() // start the task
-        
+        postTask.resume()
     }
     
     //MARK: JSON Conversion Functions
     func convertDictionaryToData(with jsonUpload:NSDictionary) -> Data?{
-        do { // try to make JSON and deal with errors using do/catch block
+        do {
             let requestBody = try JSONSerialization.data(withJSONObject: jsonUpload, options:JSONSerialization.WritingOptions.prettyPrinted)
             return requestBody
         } catch {
@@ -206,19 +162,16 @@ import UIKit
     }
     
     func convertDataToDictionary(with data:Data?)->NSDictionary{
-        do { // try to parse JSON and deal with errors using do/catch block
+        do {
             let jsonDictionary: NSDictionary =
                 try JSONSerialization.jsonObject(with: data!,
                                                  options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-            
             return jsonDictionary
-            
         } catch {
             print("json error: \(error.localizedDescription)")
-            return NSDictionary() // just return empty
+            return NSDictionary()
         }
     }
     
 }
-
 

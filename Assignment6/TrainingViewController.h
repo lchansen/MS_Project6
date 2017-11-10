@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TrainingViewController : UIViewController
-
-
+- (void)initDSID:(NSInteger) d;
+-(void)callbackLabel:(NSString*)label;
 @end
 
