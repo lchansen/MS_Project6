@@ -1,9 +1,9 @@
 //
 //  AppDelegate.m
-//  MS_Project6
+//  Assignment6
 //
-//  Created by Luke Hansen on 11/8/17.
-//  Copyright © 2017 Luke Hansen. All rights reserved.
+//  Created by Oscar on 11/10/17.
+//  Copyright © 2017 SMU.cse5323. All rights reserved.
 //
 
 #import "AppDelegate.h"

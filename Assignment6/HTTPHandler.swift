@@ -8,12 +8,12 @@
 
 import Foundation
 
-let SERVER_URL = "http://:8000"
+let SERVER_URL = "http://192.168.0.177:8000"
 
 import Foundation
 import UIKit
 
-class HTTPController: NSObject, URLSessionDelegate {
+@objc public class HTTPHandler: NSObject, URLSessionDelegate {
     
     var session = URLSession()
     var sampleRate = 0
@@ -23,7 +23,16 @@ class HTTPController: NSObject, URLSessionDelegate {
     
     let animation = CATransition()
     
-    
+    override init(){
+        let sessionConfig = URLSessionConfiguration.ephemeral
+        
+        sessionConfig.timeoutIntervalForRequest = 5.0
+        sessionConfig.timeoutIntervalForResource = 8.0
+        sessionConfig.httpMaximumConnectionsPerHost = 1
+        
+        self.sampleRate = 44100
+        self.label = "init"
+    }
     
     func initializeTrain(sampleRate: Int, signal: [Float], label: String){
         let sessionConfig = URLSessionConfiguration.ephemeral
@@ -45,6 +54,7 @@ class HTTPController: NSObject, URLSessionDelegate {
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = kCATransitionReveal
         animation.duration = 0.5
+        
     }
     
     func initializeTest(sampleRate: Int, signal: [Float]){
@@ -65,6 +75,7 @@ class HTTPController: NSObject, URLSessionDelegate {
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = kCATransitionReveal
         animation.duration = 0.5
+        
     }
     
     
@@ -170,3 +181,5 @@ class HTTPController: NSObject, URLSessionDelegate {
     }
     
 }
+
+

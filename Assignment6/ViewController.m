@@ -11,11 +11,12 @@
 #import "CircularBuffer.h"
 #import "FFTHelper.h"
 #import "math.h"
-#import "MS_Project6-Swift.h"
+#import "Assignment6-Swift.h"
 
 #define BUFFER_SIZE 8192
 
 @interface ViewController ()
+@property (strong, nonatomic) HTTPHandler *httpHandler;
 @property (strong, nonatomic) Novocaine *audioManager;
 @property (strong, nonatomic) CircularBuffer *buffer;
 @property (strong, nonatomic) FFTHelper *fftHelper;
@@ -56,10 +57,10 @@
 
 - (IBAction)recordPress:(id)sender {
     self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-                                          target:self
-                                        selector:@selector(update)
-                                        userInfo:nil
-                                         repeats:YES];
+                                                        target:self
+                                                      selector:@selector(update)
+                                                      userInfo:nil
+                                                       repeats:YES];
 }
 - (IBAction)recordRelease:(id)sender {
     self.repeatTimer.invalidate;
@@ -76,13 +77,13 @@
     }];
     
     [self.audioManager play];
-
+    
     //we'll use this on a button to get the last x seconds after pressing a timer start
-//    [NSTimer scheduledTimerWithTimeInterval:0.1
-//                                     target:self
-//                                   selector:@selector(update)
-//                                   userInfo:nil
-//                                    repeats:YES];
+    //    [NSTimer scheduledTimerWithTimeInterval:0.1
+    //                                     target:self
+    //                                   selector:@selector(update)
+    //                                   userInfo:nil
+    //                                    repeats:YES];
 }
 
 
@@ -101,7 +102,7 @@
     
     float maxVal = 0;
     vDSP_Length maxIndex = 0;
-
+    
     for(int i = 1; i < BUFFER_SIZE/8; i++) {
         if(fftMagnitude[i] > maxVal) {
             maxVal = fftMagnitude[i];
@@ -122,7 +123,7 @@
     }
     float freq1 = (float)maxIndex * self.audioManager.samplingRate/(BUFFER_SIZE);
     self.testLabel.text = [NSString stringWithFormat:@"%.1f Hz", (freq1)];
-//    float freq2 = (float)maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE);
+    //    float freq2 = (float)maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE);
     
     
     free(arrayData);
@@ -134,4 +135,5 @@
 
 
 @end
+
 
