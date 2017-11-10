@@ -8,8 +8,8 @@
 
 import Foundation
 
-//let SERVER_URL = "http://162.243.151.247"
-let SERVER_URL = "http://192.168.0.177:8000"
+let SERVER_URL = "http://162.243.151.247"    //DigitalOcean
+//let SERVER_URL = "http://192.168.0.177:8000" //local
 
 
 import Foundation
@@ -26,9 +26,9 @@ import UIKit
     override init(){
         super.init()
         let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 5.0
-        sessionConfig.timeoutIntervalForResource = 8.0
-        sessionConfig.httpMaximumConnectionsPerHost = 1
+        sessionConfig.timeoutIntervalForRequest = 30.0
+        sessionConfig.timeoutIntervalForResource = 30.0
+        sessionConfig.httpMaximumConnectionsPerHost = 5
         
         self.session = URLSession(configuration: sessionConfig,
                                   delegate: self,
@@ -86,9 +86,9 @@ import UIKit
                                                                     let status:String? = jsonDictionary.value(forKey: "status") as? String
                                                                     DispatchQueue.main.async{
                                                                         if(status == "success"){
-                                                                            vc.callbackLabel("✅")
+                                                                            vc.callbackLabel("✅", knn:"", svm:"")
                                                                         } else {
-                                                                            vc.callbackLabel("❌")
+                                                                            vc.callbackLabel("❌", knn:"", svm:"")
                                                                             print("You done got an error")
                                                                             print(error as Any)
                                                                         }
@@ -109,13 +109,15 @@ import UIKit
                                                                     let jsonDictionary = self.convertDataToDictionary(with: data)
                                                                     print(jsonDictionary)
                                                                     let status:String? = jsonDictionary.value(forKey: "status") as? String
+                                                                    let knn_acc:String? = jsonDictionary.value(forKey: "knn") as? String
+                                                                    let svm_acc:String? = jsonDictionary.value(forKey: "svm") as? String
                                                                     DispatchQueue.main.async{
                                                                         if(status == "success"){
-                                                                            vc.callbackLabel("✅")
+                                                                            vc.callbackLabel("✅", knn:knn_acc!, svm:svm_acc!)
                                                                         } else if (status!.range(of: ">") != nil) {
-                                                                            vc.callbackLabel(status)
+                                                                            vc.callbackLabel(status, knn:"", svm:"")
                                                                         } else {
-                                                                            vc.callbackLabel("❌")
+                                                                            vc.callbackLabel("❌", knn:"", svm:"")
                                                                             print("You done got an error")
                                                                             print(error as Any)
                                                                         }

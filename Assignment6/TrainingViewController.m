@@ -31,6 +31,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *svm_kernel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *knn_resub;
+@property (weak, nonatomic) IBOutlet UILabel *svm_resub;
+
+
 
 @end
 
@@ -113,6 +117,7 @@
             [myArray addObject:number];
         }
         [self.spinner startAnimating];
+        self.statusLabel.text = nil;
         [self.httpHandler trainWithDsid:(int)self.dsidStepper.value sampleRate:44100 signal:myArray label:self.classLabel.text vc:self];
         return;
     }
@@ -150,6 +155,7 @@
     //svm_kernel defaults to the "rbf"
     NSString* kernel = self.svm_kernel.text;
     kernel = [@[@"linear", @"polynomial", @"rbf", @"sigmoid"] containsObject: kernel] ? kernel : @"rbf";
+    self.statusLabel.text = nil;
     [self.spinner startAnimating];
     [self.httpHandler updateModelWithDsid:(int)self.dsidStepper.value
                               n_neighbors:n
@@ -158,8 +164,10 @@
      ];
 }
 
--(void)callbackLabel:(NSString*)label{
+-(void)callbackLabel:(NSString*)label knn:(NSString*)knn svm:(NSString*)svm {
     self.statusLabel.text = label;
+    self.knn_resub.text = knn;
+    self.svm_resub.text = svm;
     [self.spinner stopAnimating];
 }
 

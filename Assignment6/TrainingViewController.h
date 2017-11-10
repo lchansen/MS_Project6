@@ -10,6 +10,6 @@
 
 @interface TrainingViewController : UIViewController
 - (void)initDSID:(NSInteger) d;
--(void)callbackLabel:(NSString*)label;
+-(void)callbackLabel:(NSString*)label knn:(NSString*)knn svm:(NSString*)svm;
 @end
 
